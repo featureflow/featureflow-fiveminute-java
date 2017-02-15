@@ -33,7 +33,7 @@ public class HelloWorld {
         //The first parameter is the variant key
         //The second parameter is the context created above
         //The third parameter is the failover variant. This is the variant that is returned if all else fails.
-        String variant = client.evaluate("feature-targeting-rules", context, Variant.off);
+        String variant = client.evaluate("example-feature", context, Variant.off);
 
         if (Variant.on.equals(variant)) {
             System.out.println("The variant is on!");
