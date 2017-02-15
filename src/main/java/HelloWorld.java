@@ -24,7 +24,7 @@ public class HelloWorld {
         //You can create the featureFlowClient using the builder. The builder helps you instatiate the client with the correct onfiguration.
         //Here we pass in our api key (from the featureflow environment view settings panel)
         //We provide a callback function to illustrate how featureflow can reacte as features are toggled (generally you would not evaluate on the control directly however)
-        FeatureFlowClient client = new FeatureFlowClient.Builder("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1ODk4MzFiZThhZmQxODgzZDg4ZTQzMWEiLCJhdXRoIjoiUk9MRV9FTlZJUk9OTUVOVCJ9.1EvoDmtqOaAfYTtB3B1q7kSMp_Y27kQAa8GKM3fdHZcr1s6BQXHPW88U1j1K3Gwd4f0pHfZnSEJyZL0bd8kriA")
+        FeatureFlowClient client = new FeatureFlowClient.Builder("{SERVER_ENVIRONMENT_API_KEY}")
                 .withConfig(config)
                 .withCallback(control -> System.out.println("Received a control update event: " + control.getKey() + " variant: " + control.evaluate(context)))
                 .build();
