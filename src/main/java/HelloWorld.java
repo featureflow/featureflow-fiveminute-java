@@ -18,14 +18,10 @@ public class HelloWorld {
                 .withValue("user_role", "admin")
                 .build();
 
-        String baseUri = "http://app.featureflow.dev";
-        FeatureFlowConfig config = new FeatureFlowConfig.Builder()
-                .withBaseURI(baseUri).build();
-        //You can create the featureFlowClient using the builder. The builder helps you instatiate the client with the correct onfiguration.
+        //You can create the featureFlowClient using the builder. The builder helps you instatiate the client with the correct configuration.
         //Here we pass in our api key (from the featureflow environment view settings panel)
         //We provide a callback function to illustrate how featureflow can reacte as features are toggled (generally you would not evaluate on the control directly however)
         FeatureFlowClient client = new FeatureFlowClient.Builder("{SERVER_ENVIRONMENT_API_KEY}")
-                .withConfig(config)
                 .withCallback(control -> System.out.println("Received a control update event: " + control.getKey() + " variant: " + control.evaluate(context)))
                 .build();
 
