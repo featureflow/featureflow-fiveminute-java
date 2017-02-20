@@ -16,6 +16,7 @@ public class HelloWorld {
                 .withValue("age", 32)
                 .withValue("signup_date", new DateTime(2017, 1, 1, 12, 0, 0, 0))
                 .withValue("user_role", "admin")
+                .withValue("user_tier", "gold")
                 .build();
 
         //You can create the featureFlowClient using the builder. The builder helps you instatiate the client with the correct configuration.
