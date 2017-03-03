@@ -26,7 +26,7 @@ public class HelloWorldWithContext {
             Noting that these same rules can be applied using both the backend APIs and the Frontend Javascript API you can toggle conveniently at the front-end while backing up securely with server rules.
 
 
-            As these context values are evaluated they appear in featureflow so that you can select them in 'rules' to target your features.
+            As these  context values are evaluated they appear in featureflow so that you can select them in 'rules' to target your features.
          */
         FeatureFlowContext context = FeatureFlowContext
                 .keyedContext("flo@example.com")
