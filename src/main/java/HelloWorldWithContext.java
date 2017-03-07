@@ -55,7 +55,7 @@ public class HelloWorldWithContext {
             The third parameter is the failover variant. This is the variant that is returned if all else fails.
          */
         String failoverVariant = Variant.off;
-        String variant = client.evaluate("example-feature", context, failoverVariant);
+        String variant = client.evaluate("example-feature", context, failoverVariant).value();
 
         if (Variant.on.equals(variant)) {
             System.out.println("The variant is on!");

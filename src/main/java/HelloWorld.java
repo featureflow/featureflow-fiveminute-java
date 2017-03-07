@@ -10,7 +10,7 @@ public class HelloWorld {
         FeatureFlowClient client = new FeatureFlowClientImpl("{{YOUR_SERVER_ENVIRONMENT_API_KEY_HERE}}" +
                 "");
         String failoverVariant = Variant.off;
-        String variant = client.evaluate("example-feature", failoverVariant);
+        String variant = client.evaluate("example-feature", failoverVariant).value();
 
         if (Variant.on.equals(variant)) {
             System.out.println("The variant is on!");
