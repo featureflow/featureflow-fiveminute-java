@@ -1,3 +1,4 @@
+import io.featureflow.client.Feature;
 import io.featureflow.client.FeatureFlowClient;
 import io.featureflow.client.FeatureFlowContext;
 import io.featureflow.client.Variant;
@@ -41,9 +42,11 @@ public class HelloWorldWithContext {
             We create the featureFlowClient using the builder. The builder helps you instantiate the client with the correct configuration.
             The client should be a singleton - if your using spring you could create it in your @Configuration and @Inject it, either way you only need one.
             Here we pass in our 'Server Api Key' - you can get the key in the environments page under the 'Api Keys' link.
+            We are actively registering a feature here with a failover variant of 'standard-variant', we recommend you use a static or enum reference of the key, this will help reduce tech debt and allow you to easily identify usage later
             We provide a callback function to illustrate how featureflow can react in real-time as features are toggled (generally you would not evaluate on the control directly however)
          */
         FeatureFlowClient client = new FeatureFlowClient.Builder("{{YOUR_SERVER_ENVIRONMENT_API_KEY_HERE}}")
+                .withFeature(new Feature(MyFeatures.EXAMPLE_FEATURE.getValue(), "standard-variant"))
                 .withCallback(control -> System.out.println("Received a control update event: " + control.getKey() + " variant: " + control.evaluate(context)))
                 .build();
 
@@ -52,15 +55,16 @@ public class HelloWorldWithContext {
             'client.evaluate' is en example of evaluating a specific feature variant.
             The first parameter is the variant key
             The second parameter is the context created above
-            The third parameter is the failover variant. This is the variant that is returned if all else fails.
-         */
-        String failoverVariant = Variant.off;
-        String variant = client.evaluate("example-feature", context, failoverVariant).value();
 
-        if (Variant.on.equals(variant)) {
-            System.out.println("The variant is on!");
+            Generally you would call isOn/isOff/value in a chained value, but you can hold the eval object if desired as below.
+         */
+
+        FeatureFlowClient.Evaluate eval = client.evaluate(MyFeatures.EXAMPLE_FEATURE.getValue(), context);
+
+        if (eval.isOn()) {
+            System.out.println("The variant is " + eval.value());
         } else {
-            System.out.println("The variant is not on!");
+            System.out.println("The variant is " + eval.value());
         }
 
         /**

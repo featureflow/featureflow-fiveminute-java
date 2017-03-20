@@ -1,3 +1,4 @@
+import io.featureflow.client.Feature;
 import io.featureflow.client.FeatureFlowClient;
 import io.featureflow.client.FeatureFlowClientImpl;
 import io.featureflow.client.Variant;
@@ -9,10 +10,9 @@ public class HelloWorld {
     public static void main(String... args) throws IOException {
         //This is the simplest possible invocation of the featureflow client:
         FeatureFlowClient client = FeatureFlowClient.builder("{{YOUR_SERVER_ENVIRONMENT_API_KEY_HERE}}").build();
-        String failoverVariant = Variant.off;
-        String variant = client.evaluate("example-feature").value();
-
-        if (Variant.on.equals(variant)) {
+        //we call evaluate here to get the variant, which will be the evaluated variant value as per your rules - or 'off' in the case of a failover situation
+        //to change the failover see the HelloWorldWithContext example
+        if (client.evaluate(MyFeatures.EXAMPLE_FEATURE.getValue()).isOn()) {
             System.out.println("The variant is on!");
         } else {
             System.out.println("The variant is not on!");
