@@ -1,7 +1,6 @@
-import io.featureflow.client.Feature;
-import io.featureflow.client.FeatureFlowClient;
-import io.featureflow.client.FeatureFlowContext;
-import io.featureflow.client.Variant;
+import io.featureflow.client.FeatureflowClient;
+import io.featureflow.client.FeatureflowContext;
+import io.featureflow.client.model.Feature;
 import org.joda.time.DateTime;
 
 import java.io.IOException;
@@ -29,7 +28,7 @@ public class HelloWorldWithContext {
 
             As these  context values are evaluated they appear in featureflow so that you can select them in 'rules' to target your features.
          */
-        FeatureFlowContext context = FeatureFlowContext
+        FeatureflowContext context = FeatureflowContext
                 .keyedContext("flo@example.com")
                 .withValue("age", 32)
                 .withValue("signup_date", new DateTime(2017, 1, 1, 12, 0, 0, 0))
@@ -45,9 +44,9 @@ public class HelloWorldWithContext {
             We are actively registering a feature here with a failover variant of 'standard-variant', we recommend you use a static or enum reference of the key, this will help reduce tech debt and allow you to easily identify usage later
             We provide a callback function to illustrate how featureflow can react in real-time as features are toggled (generally you would not evaluate on the control directly however)
          */
-        FeatureFlowClient client = new FeatureFlowClient.Builder("{{YOUR_SERVER_ENVIRONMENT_API_KEY_HERE}}")
+        FeatureflowClient client = new FeatureflowClient.Builder("{{YOUR_SERVER_ENVIRONMENT_API_KEY_HERE}}")
                 .withFeature(new Feature(MyFeatures.EXAMPLE_FEATURE.getValue(), "standard-variant"))
-                .withCallback(control -> System.out.println("Received a control update event: " + control.getKey() + " variant: " + control.evaluate(context)))
+                .withUpdateCallback(control -> System.out.println("Received a control update event: " + control.getKey() + " variant: " + control.evaluate(context)))
                 .build();
 
 
@@ -59,7 +58,7 @@ public class HelloWorldWithContext {
             Generally you would call isOn/isOff/value in a chained value, but you can hold the eval object if desired as below.
          */
 
-        FeatureFlowClient.Evaluate eval = client.evaluate(MyFeatures.EXAMPLE_FEATURE.getValue(), context);
+        FeatureflowClient.Evaluate eval = client.evaluate(MyFeatures.EXAMPLE_FEATURE.getValue(), context);
 
         if (eval.isOn()) {
             System.out.println("The variant is " + eval.value());
