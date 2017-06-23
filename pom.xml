@@ -28,6 +28,7 @@
                     <archive>
                         <manifest>
                             <mainClass>HelloWorld</mainClass>
+                            <!--<mainClass>HelloWorldWithContext</mainClass>-->
                         </manifest>
                     </archive>
                     <descriptorRefs>

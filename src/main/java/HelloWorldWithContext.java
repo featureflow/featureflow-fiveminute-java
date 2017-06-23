@@ -4,6 +4,7 @@ import io.featureflow.client.model.Feature;
 import org.joda.time.DateTime;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class HelloWorldWithContext {
 
@@ -32,7 +33,7 @@ public class HelloWorldWithContext {
                 .keyedContext("flo@example.com")
                 .withValue("age", 32)
                 .withValue("signup_date", new DateTime(2017, 1, 1, 12, 0, 0, 0))
-                .withValue("user_role", "admin")
+                .withValues("user_role", Arrays.asList("admin", "pvt_tester"))
                 .withValue("tier", "gold")
                 .build();
 
@@ -46,6 +47,7 @@ public class HelloWorldWithContext {
          */
         FeatureflowClient client = new FeatureflowClient.Builder("{{YOUR_SERVER_ENVIRONMENT_API_KEY_HERE}}")
                 .withFeature(new Feature(MyFeatures.EXAMPLE_FEATURE.getValue(), "standard-variant"))
+                .withFeature(new Feature(MyFeatures.NEW_FEATURE.getValue()))
                 .withUpdateCallback(control -> System.out.println("Received a control update event: " + control.getKey() + " variant: " + control.evaluate(context)))
                 .build();
 
